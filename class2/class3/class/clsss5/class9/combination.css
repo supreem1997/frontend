@@ -1,0 +1,12 @@
+div~p{
+    background-color: cadetblue;
+}
+a:link{
+    color: brown;
+}
+a:visited{
+    color: chartreuse;
+}
+a:hover{
+    color: blue;
+}

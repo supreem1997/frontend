@@ -1,0 +1,111 @@
+"use strict";
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function(obj) {
+    return typeof obj;
+} : function(obj) {
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+function XMLHTTP() {
+    var request = false;
+    var XMLHTTPFactories = [ function() {
+        return new XMLHttpRequest();
+    }, function() {
+        return new ActiveXObject("Msxml2.XMLHTTP");
+    }, function() {
+        return new ActiveXObject("Msxml3.XMLHTTP");
+    }, function() {
+        return new ActiveXObject("Microsoft.XMLHTTP");
+    } ];
+    var createXMLHTTPObject = function createXMLHTTPObject() {
+        var xmlhttp = false;
+        for (var x in XMLHTTPFactories) {
+            try {
+                xmlhttp = XMLHTTPFactories[x]();
+            } catch (e) {
+                continue;
+            }
+            break;
+        }
+        return xmlhttp;
+    };
+    this.sendRequest = function(url, callback, postData, spotId, isSPCInstance, isAdBreakInstance) {
+        console.log("1149 Logs: Ad Request recieved: " + Date());
+        request = createXMLHTTPObject();
+        this.ErrorcallbackFired = false;
+        if (!request) return;
+        request.timeout = VMAXSDK.VmaxTimeout.getTimeout(VMAXSDK.VmaxTimeoutType.adRequest);
+        var method = postData ? "POST" : "GET";
+        request.open(method, url, true);
+        if (postData) request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.onreadystatechange = function() {
+            if (request.readyState != 4) return;
+            if (request.status != 200 && request.status != 304) {
+                setTimeout(function() {
+                    if (!this.ErrorcallbackFired) {
+                        if (isAdBreakInstance) {
+                            var insTag = document.getElementById(spotId);
+                            insTag._adbreak_.terminateAdBreak(spotId, "003");
+                        } else {
+                            VMAXSDK.Events.dispatch("onAdError", spotId, {
+                                placementId: spotId,
+                                errorCode: "003"
+                            });
+                            if (VMAXSDK && VMAXSDK.onAdError && typeof VMAXSDK.onAdError == "function") {
+                                VMAXSDK.onAdError(spotId, "network failure");
+                            }
+                            if (VMAXSDK && isAdBreakInstance && VMAXSDK.onAdBreakError && typeof VMAXSDK.onAdBreakError == "function") {
+                                VMAXSDK.onAdBreakError(placementId, "network failure");
+                            }
+                        }
+                    }
+                }.bind(this), 0);
+                return;
+            }
+            callback(request, postData, false, spotId, isSPCInstance, isAdBreakInstance);
+        };
+        request.ontimeout = function(e) {
+            console.log("1149 Logs: Ad Request timeout: " + Date());
+            this.ErrorcallbackFired = true;
+            if (isAdBreakInstance) {
+                var insTag = document.getElementById(spotId);
+                insTag._adbreak_.terminateAdBreak(spotId, "004");
+            } else {
+                VMAXSDK.Events.dispatch("onAdError", spotId, {
+                    placementId: spotId,
+                    errorCode: "004"
+                });
+                if (VMAXSDK && VMAXSDK.onAdError && typeof VMAXSDK.onAdError == "function") {
+                    VMAXSDK.onAdError(spotId, "Ad Request TimeOut");
+                }
+            }
+            return;
+        };
+        request.onload = function() {
+            return;
+        };
+        var payload = obj2urlencodedString(postData);
+        request.send(payload);
+    };
+    this.abort = function() {
+        try {
+            if (!request) return;
+            console.log("Aborting request");
+            request.abort();
+        } catch (err) {
+            console.warn("Error in 'abort' ajax request", err);
+        }
+    };
+    var obj2urlencodedString = function obj2urlencodedString(obj) {
+        var objArr = [];
+        if ((typeof obj === "undefined" ? "undefined" : _typeof(obj)) === "object") {
+            for (var ix in obj) {
+                if (obj.hasOwnProperty(ix)) objArr.push(ix + "=" + obj[ix]);
+            }
+            return encodeURI(objArr.join("&"));
+        } else return "";
+    };
+    this.TEST = function(tv) {
+        console.log("This is my TEST..." + tv);
+    };
+}

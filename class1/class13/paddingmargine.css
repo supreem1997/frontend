@@ -1,0 +1,67 @@
+/navigation bar/
+#navbar {
+    display: flex;
+    align-items: center;
+    font-family: 'DynaPuff', cursive;
+    position: sticky;
+    top: 0;
+    background-color: black;
+}
+
+#navbar::before {
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: black;
+    top: 0;
+    left: 0;
+    opacity: 0.2;
+    z-index: -1;
+}
+
+/navigation bar logo and image/
+#logo {
+    margin: 2px 30px;
+}
+
+#logo img {
+    margin: 2px 5px;
+    height: 50px;
+}
+
+
+/navigation bar item list/
+#navbar ul {
+    display: flex;
+}
+
+#navbar ul li {
+    list-style: none;
+    font-size: 12px;
+}
+
+#navbar ul li a {
+    color: white;
+    display: block;
+    padding: 3px 1px;
+    border-radius: 25px;
+    text-decoration: none;
+    margin-left: 15px;
+
+}
+
+#navbar ul li a:hover {
+    color: white;
+    background-color: orange;
+}
+
+#left {
+    color: white;
+    display: block;
+    padding: 3px 300px;
+    border-radius: 25px;
+    text-decoration: none;
+    margin-left: 15px;
+
+}

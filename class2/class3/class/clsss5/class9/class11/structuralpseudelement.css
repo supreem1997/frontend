@@ -1,0 +1,9 @@
+p::first-line{
+    color: blue;
+}
+p::before{
+    content: url(./20190621_113827.jpg)
+}
+p::after{
+    contentL: url(./20190621_113827.jpg)
+}

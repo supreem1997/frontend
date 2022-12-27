@@ -1,0 +1,11 @@
+#man{
+    border:2px solid red;
+    height:500px;
+    width: 1000px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.P{
+    border: 2px solid brown;
+}

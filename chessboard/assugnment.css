@@ -1,0 +1,56 @@
+#full{
+    border: 1px solid black;
+    height: 400px;
+    width: 400px;
+}
+
+.chessBlack1{
+    background-color: black;
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    text-align: center;
+    margin: 0px;
+
+}
+.chessWhite2{
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    text-align: center;
+    margin: 0px;
+
+
+}
+
+.second{
+    left: 60px;
+}
+
+
+.third{
+    left: 110px;
+}
+
+
+.fourth{
+    left: 160px;
+}
+
+
+.fifth{
+    left: 210px;
+}
+
+.six{
+    left: 260px;
+}
+
+.seven{
+    left: 310px;
+}
+
+.eight{
+    left: 360px;
+}
+

@@ -1,0 +1,145 @@
+#as{
+    border: 2px solid black;
+    height: 759px;
+    width: 754px;
+    /* position: absolute; */
+    /* left: 200px; */
+
+}
+#a{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:white;
+    position: relative;
+    left: 450px;
+    bottom:1px;
+}
+#b{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:black;
+    position: relative;
+    left:300px ;
+    bottom: 154px;
+
+}
+#c{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:black;
+    position: relative;
+    left:603px;
+    bottom: 306px;
+}
+#d{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:white;
+    position: relative;
+    left:150px;
+    bottom:459px;
+
+}
+#e{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:black;
+    position: relative;
+    left:-1px;
+    bottom: 611px;
+}
+#f{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:black;
+    position: relative;
+    left:450px;
+    bottom: 611px;
+}
+#g{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:black;
+    position: relative;
+    left:150px;
+    bottom: 764px;
+}
+#h{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:black;
+    position: relative;
+    left:602px;
+    bottom: 765px;
+}
+#i{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:black;
+    position: relative;
+    left:300px;
+    bottom: 916px;
+}
+#j{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:black;
+    position: relative;
+    left:-1px;
+    bottom: 1069px;
+}
+#k{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:black;
+    position: relative;
+    left:452px;
+    bottom: 1070px;
+}
+#l{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:black;
+    position: relative;
+    left:150px;
+    bottom: 1222px;
+}
+#m{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:black;
+    position: relative;
+    left:602px;
+    bottom: 1222px;
+}
+#n{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:black;
+    position: relative;
+    left:301px;
+    bottom: 1375px;
+}
+#o{
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
+    background-color:black;
+    position: relative;
+    left:-1px;
+    bottom: 1528px;
+}

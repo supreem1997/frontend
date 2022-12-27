@@ -1,0 +1,12 @@
+p:first-child{
+    background-color: brown;
+}
+p:last-child{
+    background-color: grey;
+}
+p:nth-child(3){
+    background-color: chartreuse;
+}
+p{
+    background-color: blue  ;
+}

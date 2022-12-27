@@ -1,0 +1,30 @@
+*{
+    padding: 0px;
+    margin: 0px;
+
+}
+
+div{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+
+}
+div ul li{
+;
+}
+
+div ul li{
+    border-radius: 300px;
+    /* list-style: none; */
+    animation: buffer 2s linear;
+    
+
+}
+div ul li{
+    border-radius: 300px;
+    /*list-style: none; */
+    animation:buffer 2s linear ;
+}

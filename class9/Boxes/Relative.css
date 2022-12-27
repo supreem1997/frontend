@@ -1,0 +1,87 @@
+#sa{
+    border: 2px solid black;
+    height: 100px;
+    width: 100px;
+    background-color: rgb(24, 23, 23) ;
+    /* position: absolute; */
+    /* position: relative; */
+    position: static;
+    position: fixed;
+    left: 300px;
+    top:676px ;
+}
+#pa{
+    border: 2px solid black;
+    height: 100px;
+    width: 100px;
+    background-color: black ;
+    position: absolute;
+    left:352px;
+    
+}
+#ma{
+    border: 2px solid black;
+    height: 100px;
+    width: 100px;
+    background-color: white ;
+    position: absolute;
+    left: 250px;
+}
+#re{
+    border: 2px solid black;
+    height: 100px;
+    width: 100px;
+    background-color: black ;
+    position: absolute;
+    left:146px;
+    
+}
+#ga{
+    border: 2px solid black;
+    height: 100px;
+    width: 100px;
+    background-color: white;
+    position: absolute;
+    left:42px;
+    
+    
+}
+#ni{
+    border: 2px solid black;
+    height: 100px;
+    width: 100px;
+    background-color:white ;
+    position: relative;
+    top: 105px;
+    left: 345px;
+    
+    
+}
+#A{
+    border: 2px solid black;
+    height: 100px;
+    width: 100px;
+    background-color:black;
+    position: relative;
+    left:240px ;
+}
+#B{
+    border: 2px solid black;
+    height: 100px;
+    width: 100px;
+    background-color: white;
+    position: relative;
+    left: 135px;
+    bottom: 103px;
+}
+#C{
+    border: 2px solid black;
+    height: 100px;
+    width: 100px;
+    background-color: black;
+    position: relative;
+}
+{
+    background-color: black;
+    color: aliceblue;
+}

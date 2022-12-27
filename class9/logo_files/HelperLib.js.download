@@ -1,0 +1,164 @@
+"use strict";
+
+function vservNotifyImpression(vservNativeAdData) {
+    if (vservNativeAdData.hasOwnProperty("impTrackers")) {
+        var vservImpressionNotificationArr = new Array();
+        for (var i = 0; i < vservNativeAdData.impTrackers.length; i++) {
+            vservImpressionNotificationArr.push(vservNativeAdData.impTrackers[i]);
+        }
+        if (vservImpressionNotificationArr.length > 0) {
+            vservNotify(vservImpressionNotificationArr, 0, null);
+        }
+    }
+}
+
+function vservHandleClick(vservNativeAdData, id) {
+    if (vservNativeAdData.hasOwnProperty("clickTrackers")) {
+        var vservClickNotificationArr = new Array();
+        for (var i = 0; i < vservNativeAdData.clickTrackers.length; i++) {
+            vservClickNotificationArr.push(vservNativeAdData.clickTrackers[i]);
+        }
+        var isDeepLink = vservHandleDeeplink(vservNativeAdData, vservClickNotificationArr);
+        if (!isDeepLink && vservNativeAdData.hasOwnProperty("linkFallback") && vservNativeAdData.linkFallback !== "") {
+            vservNotify(vservClickNotificationArr, 1, vservNativeAdData["linkFallback"], id);
+        }
+    }
+}
+
+function vservHandleDeeplink(vservNativeAdData, vservClickNotificationArr) {
+    var _ua = navigator.userAgent;
+    var isAndroid = /Android/i.test(_ua);
+    var isIphoneOrIpad = /iPhone|iPad/i.test(_ua);
+    var isChrome = /Chrome/i.test(_ua);
+    var isEnvAndroidChrome = isAndroid && isChrome;
+    if (!isEnvAndroidChrome) return false;
+    var _vservNativeAdData$li = vservNativeAdData.linkUrl, linkUrl = _vservNativeAdData$li === undefined ? "" : _vservNativeAdData$li, _vservNativeAdData$li2 = vservNativeAdData.linkFallback, linkFallback = _vservNativeAdData$li2 === undefined ? "" : _vservNativeAdData$li2;
+    if (!linkUrl || !linkFallback) return false;
+    var convertedLinkUrl = vservConvertToChromeIntentScheme(linkUrl, linkFallback);
+    if (!convertedLinkUrl) return false;
+    sendBeacon(vservClickNotificationArr);
+    window.open(convertedLinkUrl, "_blank");
+    return true;
+}
+
+function vservConvertToChromeIntentScheme(uri, fallbackUrl) {
+    try {
+        var uriArray = uri.split("://");
+        var scheme = uriArray[0];
+        var message = uriArray[1];
+        var uriConstruct = "intent://" + uriArray[1] + "/#Intent;scheme=" + uriArray[0] + ";S.browser_fallback_url=" + (fallbackUrl || "") + ";end";
+        return uriConstruct;
+    } catch (err) {
+        return false;
+    }
+}
+
+function vservNotify(notifyUrls, vservAction, vservClickUrl, id) {
+    var vservShortlistArr = new Array();
+    var vservClickCounter = 0;
+    for (var i = 0; i < notifyUrls.length; i++) {
+        var vservUrlPattern = /^((http|https):)/;
+        if (vservUrlPattern.test(notifyUrls[i])) {
+            vservShortlistArr.push(notifyUrls[i]);
+        }
+    }
+    if (vservAction === 1 && vservShortlistArr.length === 0) {
+        window.top.location = vservClickUrl;
+        return;
+    }
+    sendBeacon(vservShortlistArr);
+    if (vservAction === 1) {
+        window.open(vservClickUrl, "_blank");
+    }
+}
+
+function sendBeacon(arrNotify) {
+    var imgObject;
+    var clkTracker = [];
+    var polyFill = true;
+    if (typeof arrNotify == "string") clkTracker.push(arrNotify); else clkTracker = arrNotify;
+    for (var ix in clkTracker) {
+        if (!polyFill) {
+            navigator.sendBeacon(clkTracker[ix]);
+        } else {
+            imgObject = new Image();
+            imgObject.src = clkTracker[ix];
+        }
+    }
+}
+
+function vservclick(e) {
+    try {
+        var ins_id = e.dataset.pid;
+        var vservNativeAdData = JSON.parse(document.getElementById(ins_id).adContent);
+        vservHandleClick(vservNativeAdData, ins_id);
+    } catch (err) {
+        console.warn("Could not initiate click event!");
+    }
+}
+
+function parseCompanionAd(options) {
+    var adspotKey = options.adspotKey, response = options.response, placementId = options.placementId;
+    var pNode = document.getElementById(placementId);
+    var isPlacementPrimary = pNode.getAttribute("data-companion-level") == "primary";
+    if (response == "") {
+        if (isPlacementPrimary) {
+            VMAX.companionManager.setCompanionCache({
+                adspotKey: adspotKey,
+                placementId: placementId,
+                companionAds: {}
+            });
+        }
+        return;
+    }
+    var adJSON = typeof response === "string" ? JSON.parse(response) : response;
+    if (adJSON["type"] && adJSON["type"] == 12 && adJSON["ad"] == "") {
+        VMAX.companionManager.setCompanionCache({
+            adspotKey: adspotKey,
+            placementId: placementId,
+            companionAds: {}
+        });
+        return;
+    } else if (adJSON["type"] && adJSON["type"] != 12) {
+        return;
+    }
+    var vastParser = new VastParser();
+    vastParser.init({
+        xml: adJSON["ad"],
+        onXmlParseSuccess: function onXmlParseSuccess(companionAds) {
+            companionAds = companionAds == null || companionAds == undefined ? {} : companionAds;
+            VMAX.companionManager.setCompanionCache({
+                adspotKey: adspotKey,
+                placementId: placementId,
+                companionAds: companionAds
+            });
+        },
+        onXmlParseError: function onXmlParseError(argument) {
+            try {
+                if (VMAXSDK && VMAXSDK.onAdError && typeof VMAXSDK.onAdError == "function") {
+                    VMAXSDK.onAdError(placementId, "Parsing error");
+                }
+                onPrimaryAdEnd({
+                    adspotKey: adspotKey,
+                    placementId: placementId
+                });
+                return;
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    });
+}
+
+{}
+
+function vmaxLaunchOperation(event, schemeUrl) {
+    if (schemeUrl == "") return;
+    var placementId = event.parentElement.parentElement.parentElement.getAttribute("data-parent-id");
+    var pNode = document.getElementById(placementId);
+    var operationEventRecevier = pNode.IOperationEventRecevier;
+    VMAX.operationMediator.handleOperation({
+        schemeUrl: schemeUrl,
+        operationEventRecevier: operationEventRecevier
+    });
+}

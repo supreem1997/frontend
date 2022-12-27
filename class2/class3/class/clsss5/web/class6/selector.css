@@ -1,0 +1,14 @@
+#rex{
+background-color: greenyellow;
+}
+
+.man{
+    background-color: blueviolet;
+}
+
+#rex.man,h3{
+    color: aqua;
+}
+div{
+    background-color: blue;
+}

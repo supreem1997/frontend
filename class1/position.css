@@ -1,0 +1,31 @@
+#nan{
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    left: 100px;
+    background-color: blue;
+}
+#man{
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    left: 200px;
+    background-color: brown;
+}
+#can{
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    left: 150px;
+    top: 65px;
+    background-color: green;
+}
+#van{
+    height:100px;
+    width: 100px;
+    position: absolute;
+    left: 50px;
+    top: 65px;
+    background-color: gold;
+}
+

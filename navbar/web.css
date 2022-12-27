@@ -1,0 +1,49 @@
+/*navigation bar*/
+#navbar {
+    display: flex;
+    align-items: center;
+    font-family: 'DynaPuff', cursive;
+    position: sticky;
+    background-color: rgb(27, 6, 46);
+}
+
+
+/*navigation bar logo and image*/
+#logo img {
+    height: 50px;
+    width: 100px;
+}
+
+
+/*navigation bar item list*/
+#navbar ul {
+    display: flex;
+}
+
+#navbar ul li {
+    list-style: none;
+    font-size: 15px;
+}
+
+#navbar ul li a {
+    color: white;
+    display: block;
+    padding: 3px 1px;
+    text-decoration: none;
+    margin-left: 20px;
+
+}
+
+#two{
+    background-color: blueviolet;
+    border-radius: 5px;
+    text-align: center;
+    padding: 3px 5px;
+    margin-left: 10px;
+    float: left;
+}
+
+#one{
+    margin-left: 450px;
+}
+
